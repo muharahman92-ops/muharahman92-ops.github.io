@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muhammed A. GIS Portfolio</title>
+<meta name="description" content="Conflict, climate and humanitarian cartography across Nigeria, the Sahel and the Lake Chad Basin.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Schibsted+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Layout idea: a quiet gallery. One map per screen, alternating sides, a centred caption with three hairlines, dark region dividers. */
+  --paper:#f1f1f1;
+  --ink:#212721;
+  --soft:#464646;
+  --night:#16140e;
+  --bone:#ebe9e5;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --grot:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 18px/1.45 var(--serif)}
+a{color:inherit;text-decoration:none}
+img,video{display:block;max-width:100%}
+[hidden]{display:none!important}
+:focus-visible{outline:1px solid currentColor;outline-offset:4px}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.up{text-transform:uppercase}
+.hov{transition:opacity .3s}
+.hov:hover{opacity:.5}
+
+/* monogram, fixed top left */
+.logo{position:fixed;top:24px;left:24px;z-index:60;transform-origin:top left;transform:scale(1.5);transition:transform .4s cubic-bezier(0,.15,0,.99),color .3s;color:var(--ink);font:500 64px/.8 var(--serif);letter-spacing:-.04em;user-select:none}
+.logo i{font-style:italic;font-weight:400}
+.logo.small{transform:scale(1)}
+
+/* header */
+header{height:400px;display:grid;grid-template-columns:1fr 1fr 1fr;align-items:end;padding:0 24px;border-bottom:1px solid var(--ink);background:var(--paper)}
+header > *{height:58px;display:flex;align-items:center;margin:0}
+header .l{gap:40px}
+header .c{justify-content:center}
+header nav{justify-content:flex-end;gap:24px}
+
+/* project screens */
+.proj{position:relative;display:flex;align-items:center;min-height:100vh;background:var(--bg);color:var(--fg)}
+.proj.r{flex-direction:row-reverse}
+.media{flex-shrink:0;height:100vh;width:calc(100vh * var(--ar));max-width:80vw;transform-origin:left top;transform:scale(var(--s,1));will-change:transform}
+.proj.r .media{transform-origin:right top}
+.proj.land .media{height:auto;aspect-ratio:var(--ar)}
+.media img,.media video{width:100%;height:100%;object-fit:contain;cursor:zoom-in}
+.cap{flex:1;display:flex;justify-content:center;padding:40px 24px}
+.cap-in{min-width:200px;max-width:400px;text-align:center;opacity:var(--o,1);transform:translateY(calc((1 - var(--o,1)) * 24px))}
+.cap .desc{font-size:16.5px;line-height:1.55;padding:16px 8px 8px;text-wrap:pretty}
+.meta{display:grid;grid-template-columns:auto auto;justify-content:center;gap:4px 14px;margin:8px 0 18px;font:500 11px/1.5 var(--grot);letter-spacing:.06em;text-transform:uppercase;text-align:left}
+.meta dt{opacity:.55}.meta dd{margin:0}
+button.tag{display:inline-block;margin-top:14px}
+.cap h2{margin:0;font:inherit;text-transform:uppercase;border-bottom:1px solid currentColor;padding:0 8px 8px}
+.cap p{margin:0;padding:8px}
+.lines{display:flex;flex-direction:column;gap:8px}
+.lines span{display:block;height:1px;background:currentColor}
+.tag{font:500 11px/1 var(--grot);letter-spacing:.08em;text-transform:uppercase;opacity:.7;padding-top:14px}
+
+/* region dividers */
+.region{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--night);color:var(--bone);padding:0 16px}
+.region .in{display:flex;flex-direction:column;align-items:center;gap:72px;width:100%;padding:0 clamp(24px,12vw,256px)}
+.word{width:100%;display:block;overflow:visible}
+.word text{font-family:var(--grot);font-weight:900;fill:currentColor;letter-spacing:-.02em}
+.strip{display:flex;height:20px;align-items:center;font:500 10px/1 var(--grot);letter-spacing:.08em;text-transform:uppercase;opacity:.7}
+.strip p{margin:0;height:100%;display:flex;align-items:center;padding:0 24px;border-right:1px solid currentColor}
+.strip p:first-child{border-left:1px solid currentColor}
+
+/* about */
+.about{background:#fbfafa;color:var(--soft);padding:140px 24px;display:flex;justify-content:center}
+.about .in{max-width:640px;text-align:center}
+.about h2{margin:0 auto 32px;font:inherit;text-transform:uppercase;border-bottom:1px solid currentColor;padding:0 8px 8px;display:inline-block;min-width:200px}
+.about p{margin:0 0 20px;text-wrap:pretty}
+.about .lines{width:200px;margin:40px auto 0}
+.facts{display:flex;flex-wrap:wrap;justify-content:center;margin-top:48px;font:500 11px/1.4 var(--grot);letter-spacing:.06em;text-transform:uppercase}
+.facts span{padding:6px 18px;border-right:1px solid currentColor}
+.facts span:first-child{border-left:1px solid currentColor}
+
+/* contact */
+.contact .strip a{display:flex;height:100%;align-items:center;padding:0 24px;border-right:1px solid currentColor}
+.contact .strip a:first-child{border-left:1px solid currentColor}
+.contact .strip button{height:100%;padding:0 24px;border-right:1px solid currentColor;font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit}
+.toast{font:500 11px/1 var(--grot);letter-spacing:.08em;text-transform:uppercase;min-height:14px;opacity:.8;margin:0}
+#cv{max-width:min(900px,96vw)}
+#cv .bar{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:#fbfafa;border-bottom:1px solid #d8d8d4;font-size:15px;text-transform:uppercase}
+#cv .pages{display:flex;flex-direction:column;gap:12px;padding:12px;background:#e6e5e1}
+#cv .pages img{width:100%;height:auto;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+@media (max-width:1023px){.contact .strip{height:auto;flex-wrap:wrap;justify-content:center;row-gap:10px}.contact .strip a,.contact .strip button{height:20px}}
+.contact .note{font:400 18px/1.45 var(--serif);text-align:center;max-width:44ch;margin:0;opacity:.85}
+
+footer{height:72px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:0 24px;border-top:1px solid var(--ink);background:var(--paper)}
+footer .l{display:flex;gap:24px}
+footer .c{text-align:center}
+footer nav{display:flex;gap:24px}
+
+/* lightbox */
+dialog{border:0;padding:0;max-width:min(1200px,96vw);width:100%;background:#fbfafa;color:var(--ink)}
+dialog::backdrop{background:rgba(22,20,14,.9)}
+.lb{display:grid;grid-template-columns:minmax(0,1fr) 300px}
+.lb .pic{background:#ecebe8;display:flex;align-items:center;justify-content:center;max-height:90vh;overflow:auto}
+.lb .pic img,.lb .pic video{max-height:90vh;width:auto;margin:auto}
+.lb .txt{padding:24px;display:flex;flex-direction:column;gap:14px;max-height:90vh;overflow:auto;font-size:16.5px}
+.lb .close{align-self:flex-end;text-transform:uppercase;font-size:15px}
+.lb h3{margin:0;font:inherit;font-size:18px;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:8px}
+.lb p{margin:0}
+.lb dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0;font:500 11.5px/1.5 var(--grot);letter-spacing:.05em;text-transform:uppercase}
+.lb dt{opacity:.55}
+.lb dd{margin:0}
+
+/* small screens */
+@media (max-width:1023px){
+  .logo{display:none}
+  header{position:sticky;top:0;z-index:50;height:auto;grid-template-columns:1fr auto;padding:0 20px}
+  header .c{display:none}
+  header .l span{display:none}
+  header .l a{white-space:nowrap}
+  header nav{gap:16px;font-size:14px}
+  header > *{height:56px}
+  .proj,.proj.r{flex-direction:column;min-height:0}
+  .media,.proj.land .media,.proj.r .media{width:100%;max-width:100%;height:auto;aspect-ratio:var(--ar);transform-origin:center top}
+  .cap{padding:20px 20px 72px}
+  .region{min-height:70vh}
+  .region .in{gap:40px;padding:0 12px}
+  footer{grid-template-columns:1fr;height:auto;padding:20px;gap:8px;text-align:center}
+  footer .l,footer nav{justify-content:center}
+  footer .c{display:none}
+  .lb{grid-template-columns:1fr}
+  .lb .pic,.lb .pic img,.lb .pic video{max-height:62vh}
+  .lb .txt{max-height:none}
+}
+@media (prefers-reduced-motion:reduce){.media{transform:none!important}.logo{transition:none}}
+</style>
+</head>
+<body>
+
+<a class="logo" href="#top" aria-label="Back to top" id="logo">M<i>a</i></a>
+
+<header id="top">
+  <p class="l"><a href="#top">MUHAMMED A.,</a><span>Kaduna, Nigeria</span></p>
+  <p class="c">GIS &amp; Humanitarian Cartography</p>
+  <nav aria-label="Main"><a class="up hov" href="#work">Work</a><a class="up hov" href="#about">About</a><a class="up hov" href="#contact">Contact</a></nav>
+</header>
+
+<main id="work"></main>
+
+<section class="about" id="about">
+  <div class="in">
+    <h2>About</h2>
+    <p>I am a GIS analyst based in Kaduna, Nigeria, mapping conflict, climate and humanitarian risk across Nigeria, the Sahel and the Lake Chad Basin.</p>
+    <p>Field work with INSO Nigeria and Action Against Hunger taught me that a map has to be accurate, quick to read and useful to people working in difficult places. I have contributed spatial analysis to research published by CTC Sentinel at West Point and the Danish Institute for International Studies, and volunteered on marine Key Biodiversity Area data with BirdLife International.</p>
+    <p>I hold an MSc in GIS from Sheffield Hallam University and work mostly in QGIS, ArcGIS Pro and Python, with ACLED, HDX, GRID3, WPdx and CHIRPS data.</p>
+    <div class="lines" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="facts"><span>Conflict</span><span>Displacement</span><span>Food security</span><span>Health systems</span></div>
+  </div>
+</section>
+
+<section class="region contact" id="contact" data-logo="#ebe9e5">
+  <div class="in">
+    <svg class="word" data-fit role="img" aria-label="Contact"><text x="0" y="0">CONTACT</text></svg>
+    <p class="toast" id="toast" role="status" aria-live="polite"></p>
+    <p class="note">Open to remote GIS and information management roles, and to mapping work for research and humanitarian teams.</p>
+    <div class="strip"><a class="hov" id="mail" href="mailto:muharahman92@gmail.com">muharahman92@gmail.com</a><a class="hov" href="https://www.linkedin.com/in/muhammmeda" target="_blank" rel="noopener">LinkedIn ↗</a><button type="button" class="hov" id="cvbtn">View CV</button></div>
+  </div>
+</section>
+
+<footer>
+  <div class="l"><span>MUHAMMED A.,</span><span>Kaduna</span></div>
+  <p class="c">GIS &amp; Humanitarian Cartography</p>
+  <nav aria-label="Footer"><a class="up hov" href="#work">Work</a><a class="up hov" href="#about">About</a><a class="up hov" href="#contact">Contact</a></nav>
+</footer>
+
+<dialog id="cv" aria-label="CV">
+  <div class="bar"><span>Muhammed Abdulrahman · CV</span><span style="display:flex;gap:24px"><a class="hov" id="cv-dl" href="Muhammed_Abdulrahman_CV.pdf" download hidden>Download PDF</a><button type="button" class="hov" id="cv-close">Close</button></span></div>
+  <div class="pages"><img src="img/cv-1.jpg" alt="CV page 1" loading="lazy"><img src="img/cv-2.jpg" alt="CV page 2" loading="lazy"><img src="img/cv-3.jpg" alt="CV page 3" loading="lazy"></div>
+</dialog>
+
+<dialog id="lb" aria-labelledby="lb-title">
+  <div class="lb">
+    <div class="pic"><img id="lb-img" alt=""><video id="lb-vid" controls muted loop playsinline preload="none" hidden></video></div>
+    <div class="txt">
+      <button class="close hov" type="button" id="lb-close">Close</button>
+      <h3 id="lb-title"></h3>
+      <p id="lb-desc"></p>
+      <dl id="lb-dl"></dl>
+    </div>
+  </div>
+</dialog>
+
+<script>
+const items=[
+ {id:"nigeria-violence-health",v:1,ar:1,bg:"#ebe5df",fg:"#5a1020",title:"Violence closing in on health care",period:"1997 to 2024",method:"Animated density surface over facility points",source:"ACLED, GRID3 (facilities as listed in 2019)",
+  desc:"Each year's political violence drawn as a density surface over all 46,042 health facilities in Nigeria, counting the facilities with a violent event within 5 km. In 1997 that was 3,213 facilities, 7% of the total. By 2024 it was 17,870, or 39%, as violence spread from the south across the northwest, the northeast and the Middle Belt."},
+ {id:"conflict-mineral-overlap",ext:"png",ar:1530/1980,bg:"#5f5f5f",fg:"#f1f1f1",title:"Conflict and mineral overlap",period:"2015 to 2025",method:"Hex binning, point overlay",source:"ACLED, NGSA",
+  desc:"Violent event counts binned to hexagons and overlaid with gold and lithium zones. Violence concentrates in Zamfara, Katsina and Kaduna, where major gold zones sit inside the densest clusters of banditry and kidnapping. The map is built to raise questions about extortion, site control and illegal mining rather than to settle them."},
+ {region:"NIGERIA",n:"3 maps",years:"1997–2025"},
+ {id:"nigeria-lga-hospital-gap",ext:"png",ar:1,bg:"#ffffff",fg:"#464646",title:"Deadly places, few hospitals",period:"2020 to 2024",method:"Bivariate choropleth by LGA",source:"ACLED, GRID3, WorldPop",
+  desc:"A bivariate map setting conflict deaths per 100,000 people a year against people per hospital in every Local Government Area. The darkest greens mark LGAs that are both deadly and short of hospitals, concentrated across Zamfara, Kaduna, Borno and the Benue and Taraba belt."},
+ {id:"nigeria-many-conflicts",v:1,ar:1,bg:"#e7e4df",fg:"#5a1020",title:"The many conflicts of Nigeria",period:"1997 to 2024",method:"Animated grid, dominant actor",source:"ACLED",
+  desc:"Each grid cell is coloured by the most common actor behind conflict events that year, excluding protests and riots, and shaded by event count. Over 28 years the picture shifts from Niger Delta militants and unidentified gunmen in the south, to jihadist groups in the northeast after 2009, to communal militias spreading across the northwest and Middle Belt."},
+ {id:"western-nigeria-nsag",ar:1189/1280,bg:"#f9f6ec",fg:"#464646",title:"NSAG activity in western Nigeria",period:"2022 to early 2025",method:"Point locations, areas of activity",source:"Open source and field reporting",
+  desc:"A single view of the armed group landscape across the northwest and north central states: 80 numbered bandit zones, ISWAP and Ansaru cell presence, and areas of activity for JAS, Mamuda, Lakurawa and the Ansaru insurgency."},
+ {region:"SAHEL & LAKE CHAD",n:"3 maps",years:"2000–2025"},
+ {id:"sahel-rain-conflict",v:1,ar:1,bg:"#ffffff",fg:"#212721",title:"Rain and conflict in the Sahel",period:"2000 to 2024",method:"Animated raster and graduated symbols",source:"CHIRPS v2.0, NOAA CPC, ACLED",
+  desc:"July to September rainfall anomalies against the 1991 to 2020 normal, shown above yearly conflict events from Senegal to Sudan. Charts track rainfall in standard deviations and events per year, with El Niño years flagged, as events climb past 10,000 a year in the 2020s."},
+ {id:"lcb-oag-incidents",ext:"png",ar:904/1280,bg:"#fbfafa",fg:"#464646",title:"Armed group incidents in the Lake Chad Basin",period:"2023 to 2024",method:"Hex binning by actor",source:"Humanitarian security monitoring",
+  desc:"Incidents binned to hexagons and split by actor: JAS, ISWAP, joint JAS and ISWAP, and unattributed groups, with clashes between groups outlined. Separate colour ramps keep each actor's footprint readable where they overlap around Lake Chad and Maiduguri."},
+ {id:"lcb-ied-incidents",ext:"png",ar:989/1280,bg:"#f1f1f1",fg:"#212721",title:"IED incidents and casualties",period:"1 Jan to 13 Mar 2025",method:"Graduated symbols, areas of influence",source:"Humanitarian security monitoring",
+  desc:"IED incidents sized by number of casualties and coloured by killed or injured, with controlled detonations and casualty-free IEDs marked separately. The underlay shows ISWAP, JAS and shared areas of influence."}
+];
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const main=document.getElementById('work');let side=0;
+items.forEach((m,i)=>{
+  if(m.region){
+    main.insertAdjacentHTML('beforeend',`<section class="region" data-logo="#ebe9e5"><div class="in">
+      <svg class="word" data-fit role="img" aria-label="${m.region}"><text x="0" y="0">${m.region}</text></svg>
+      <div class="strip"><p>${m.n}</p><p>${m.years}</p></div></div></section>`);return;}
+  const r=side++%2===0?' r':'', land=m.ar>1.05?' land':'';
+  const media=m.v?`<video muted loop playsinline preload="metadata" poster="img/${m.id}-thumb.jpg" src="img/${m.id}.mp4" aria-label="${esc(m.title)}"></video>`
+                 :`<img src="img/${m.id}.${m.ext||"jpg"}" alt="${esc(m.title)}" loading="${i<2?'eager':'lazy'}">`;
+  main.insertAdjacentHTML('beforeend',`<section class="proj${r}${land}" data-i="${i}" data-logo="${m.fg}" style="--bg:${m.bg};--fg:${m.fg};--ar:${m.ar}">
+    <div class="media">${media}</div>
+    <div class="cap"><div class="cap-in"><h2><button type="button" class="hov" data-open="${i}">${esc(m.title)}</button></h2>
+    <p class="desc">${esc(m.desc)}</p>
+    <dl class="meta"><dt>Period</dt><dd>${m.period}</dd><dt>Method</dt><dd>${esc(m.method)}</dd><dt>Data</dt><dd>${esc(m.source)}</dd></dl>
+    <div class="lines" aria-hidden="true"><span></span><span></span><span></span></div>
+    <button type="button" class="tag hov" data-open="${i}">${m.v?'Play full size':'View full size'} ↗</button></div></div></section>`);
+});
+
+/* fit region wordmarks to their width */
+function fitWords(){document.querySelectorAll('svg[data-fit]').forEach(s=>{const t=s.querySelector('text');t.setAttribute('font-size',100);const b=t.getBBox();s.setAttribute('viewBox',`${b.x} ${b.y+b.height*.12} ${b.width} ${b.height*.76}`);});}
+(document.fonts?document.fonts.ready:Promise.resolve()).then(fitWords);fitWords();
+
+/* lightbox */
+const lb=document.getElementById('lb'),im=document.getElementById('lb-img'),vd=document.getElementById('lb-vid');
+function openLb(i){const m=items[i];
+  if(m.v){im.hidden=true;im.removeAttribute('src');vd.hidden=false;vd.poster=`img/${m.id}-thumb.jpg`;vd.src=`img/${m.id}.mp4`;const p=vd.play();if(p&&p.catch)p.catch(()=>{});}
+  else{vd.pause();vd.hidden=true;vd.removeAttribute('src');im.hidden=false;im.src=`img/${m.id}.${m.ext||"jpg"}`;im.alt=m.title;}
+  document.getElementById('lb-title').textContent=m.title;document.getElementById('lb-desc').textContent=m.desc;
+  document.getElementById('lb-dl').innerHTML=`<dt>Period</dt><dd>${m.period}</dd><dt>Method</dt><dd>${esc(m.method)}</dd><dt>Data</dt><dd>${esc(m.source)}</dd>`;
+  lb.showModal?lb.showModal():lb.setAttribute('open','');}
+main.addEventListener('click',e=>{const b=e.target.closest('[data-open]');if(b)return openLb(+b.dataset.open);
+  const md=e.target.closest('.media');if(md)openLb(+md.parentElement.dataset.i);});
+document.getElementById('lb-close').addEventListener('click',()=>lb.close());
+lb.addEventListener('click',e=>{if(e.target===lb)lb.close();});
+lb.addEventListener('close',()=>vd.pause());
+
+/* contact: copy the email as well as trying the mail app; CV opens in page */
+const toast=t=>{const el=document.getElementById('toast');el.textContent=t;clearTimeout(toast.h);toast.h=setTimeout(()=>el.textContent='',3500);};
+document.getElementById('mail').addEventListener('click',()=>{
+  try{navigator.clipboard.writeText('muharahman92@gmail.com').then(()=>toast('Email address copied'),()=>toast('Email: muharahman92@gmail.com'));}catch(e){toast('Email: muharahman92@gmail.com');}
+});
+const cv=document.getElementById('cv');
+/* outside the claude.ai frame (own domain), downloads work, so offer the PDF */
+if(window.self===window.top)document.getElementById('cv-dl').hidden=false;
+document.getElementById('cvbtn').addEventListener('click',()=>cv.showModal?cv.showModal():cv.setAttribute('open',''));
+document.getElementById('cv-close').addEventListener('click',()=>cv.close());
+cv.addEventListener('click',e=>{if(e.target===cv)cv.close();});
+
+/* play inline animations only while on screen */
+const io=new IntersectionObserver(es=>es.forEach(en=>{const v=en.target;if(en.isIntersecting){const p=v.play();if(p&&p.catch)p.catch(()=>{});}else v.pause();}),{threshold:.35});
+document.querySelectorAll('.media video').forEach(v=>io.observe(v));
+
+/* scroll: maps grow as they arrive, monogram shrinks and takes each screen's colour */
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,wide=matchMedia('(min-width:1024px)');
+const logo=document.getElementById('logo'),projs=[...document.querySelectorAll('.proj')],zones=[...document.querySelectorAll('[data-logo]')];
+let ticking=false;
+function frame(){ticking=false;const vh=innerHeight;
+  logo.classList.toggle('small',scrollY>40);
+  let col='#212721';for(const z of zones){const r=z.getBoundingClientRect();if(r.top<=60&&r.bottom>60){col=z.dataset.logo;break;}}
+  logo.style.color=col;
+  if(reduce)return;const w=wide.matches;
+  projs.forEach((p,k)=>{const r=p.getBoundingClientRect();
+    const t=w?1-Math.min(Math.max(r.top/vh,0),1):1-Math.min(Math.max((r.top-vh*.3)/(vh*.7),0),1);
+    const s=k===0?1:(w?.55+.45*t:.62+.38*t);p.querySelector('.media').style.setProperty('--s',s.toFixed(3));p.querySelector('.cap-in').style.setProperty('--o',(k===0?1:.25+.75*Math.min(t*1.3,1)).toFixed(3));});
+}
+addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(frame);}},{passive:true});
+addEventListener('resize',()=>{fitWords();frame();});frame();
+</script>
+</body>
+</html>
